@@ -8,11 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         body { font-family: 'Inter', system-ui, sans-serif; }
-        .font-display { font-family: 'Space Grotesk', 'Inter', sans-serif; }
         .terminal { background: #111; border: 1px solid #333; }
         .price-up { color: #22c55e; }
         .price-down { color: #ef4444; }
-        .agent-bubble { background: #1f2937; border-left: 3px solid #3b82f6; }
     </style>
 </head>
 <body class="bg-[#0a0a0a] text-white">
@@ -24,124 +22,131 @@
                     <i class="fa-solid fa-chart-line text-xl"></i>
                 </div>
                 <div>
-                    <span class="font-display text-2xl font-semibold tracking-tighter">TradeTalk</span>
+                    <span class="font-semibold text-2xl tracking-tighter">TradeTalk</span>
                     <span class="ml-2 text-xs px-2 py-0.5 bg-blue-600/20 text-blue-400 rounded-full">BASE</span>
                 </div>
             </div>
-
-            <button onclick="connectWallet()" 
-                    class="flex items-center gap-x-2 px-5 py-2 bg-white text-black rounded-2xl font-medium text-sm active:scale-[0.985]">
-                <i class="fa-solid fa-wallet mr-2"></i>
+            <button onclick="connectWallet()" class="px-5 py-2 bg-white text-black rounded-2xl font-medium text-sm flex items-center gap-x-2">
+                <i class="fa-solid fa-wallet"></i>
                 <span id="wallet-text">Connect Wallet</span>
             </button>
         </div>
     </div>
 
-    <div class="max-w-6xl mx-auto px-4 pt-8 pb-12">
-        
+    <div class="max-w-6xl mx-auto px-4 pt-8">
         <!-- Hero -->
-        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-y-4 mb-8">
-            <div>
-                <div class="inline-flex items-center px-3 py-1 text-xs font-medium bg-zinc-900 rounded-2xl mb-3">IPOH DAD MODE</div>
-                <h1 class="font-display text-6xl font-semibold tracking-tighter">TradeTalk</h1>
-                <p class="text-xl text-zinc-400">Social trading powered by AI agents • Built for the family</p>
-            </div>
-            <div class="text-right">
-                <div class="text-emerald-400">Danish • Darissa • Damia</div>
-                <div class="text-sm text-zinc-500">Family First 💰</div>
-            </div>
+        <div class="mb-8">
+            <div class="inline px-3 py-1 text-xs bg-zinc-900 rounded-2xl">IPOH DAD MODE</div>
+            <h1 class="text-6xl font-semibold tracking-tighter mt-2">TradeTalk</h1>
+            <p class="text-xl text-zinc-400">Social trading powered by AI agents • Built for the family</p>
+            <div class="mt-2 text-emerald-400">Danish • Darissa • Damia &nbsp;&nbsp; Family First 💰</div>
         </div>
 
         <!-- Stats -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div class="terminal rounded-3xl p-5">
-                <div class="text-xs text-zinc-500">TOTAL VOLUME</div>
-                <div class="text-4xl font-semibold mt-1">$124.8K</div>
-            </div>
-            <div class="terminal rounded-3xl p-5">
-                <div class="text-xs text-zinc-500">ACTIVE AGENTS</div>
-                <div class="text-4xl font-semibold mt-1">7</div>
-            </div>
-            <div class="terminal rounded-3xl p-5">
-                <div class="text-xs text-zinc-500">TIPS SENT TODAY</div>
-                <div class="text-4xl font-semibold mt-1 text-emerald-400">42</div>
-            </div>
-            <div class="terminal rounded-3xl p-5">
-                <div class="text-xs text-zinc-500">YOUR ALPHA SCORE</div>
-                <div class="text-4xl font-semibold mt-1">87</div>
-            </div>
+            <div class="terminal rounded-3xl p-5"><div class="text-xs text-zinc-500">TOTAL VOLUME</div><div class="text-4xl font-semibold">$124.8K</div></div>
+            <div class="terminal rounded-3xl p-5"><div class="text-xs text-zinc-500">ACTIVE AGENTS</div><div class="text-4xl font-semibold">7</div></div>
+            <div class="terminal rounded-3xl p-5"><div class="text-xs text-zinc-500">TIPS SENT TODAY</div><div class="text-4xl font-semibold text-emerald-400">42</div></div>
+            <div class="terminal rounded-3xl p-5"><div class="text-xs text-zinc-500">YOUR ALPHA SCORE</div><div class="text-4xl font-semibold">87</div></div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            
             <!-- Live Prices -->
             <div class="terminal rounded-3xl p-6">
-                <div class="flex justify-between items-center mb-4">
+                <div class="flex justify-between mb-4">
                     <div class="font-semibold">Live Prices</div>
                     <button onclick="fetchPrices()" class="text-xs px-3 py-1 bg-black rounded-2xl">Refresh</button>
                 </div>
                 <div id="prices" class="space-y-3 text-sm"></div>
             </div>
 
-            <!-- MCP Agent -->
-            <div class="terminal rounded-3xl p-6 flex flex-col">
-                <div class="font-semibold mb-3 flex items-center gap-x-2">
-                    <i class="fa-solid fa-robot text-blue-400"></i>
-                    <span>MCP Agent • Alpha Yap</span>
-                </div>
-                
-                <div id="agent-chat" class="flex-1 overflow-y-auto space-y-3 mb-4 pr-1 text-sm" style="max-height: 240px;"></div>
-                
+            <!-- Agent -->
+            <div class="terminal rounded-3xl p-6">
+                <div class="font-semibold mb-3">MCP Agent • Alpha Yap</div>
+                <div id="agent-chat" class="h-48 overflow-y-auto space-y-3 mb-4 text-sm pr-2"></div>
                 <div class="flex gap-x-2">
-                    <input id="agent-input" type=" text-2xl font-semibold tracking-tighter">TradeTalk</span>
-                    <span class="ml-2 text-xs px-2 py-0.5 bg-blue-600/20 text-blue-400 rounded-full">BASE</span>
+                    <input id="agent-input" type="text" placeholder="Ask the agent..." class="flex-1 bg-black border border-zinc-700 rounded-2xl px-4 py-3 text-sm" onkeypress="if(event.key==='Enter') sendToAgent()">
+                    <button onclick="sendToAgent()" class="px-6 bg-blue-600 rounded-2xl font-medium">Send</button>
                 </div>
             </div>
+        </div>
 
-            <button onclick="connectWallet()" 
-                    class="flex items-center gap-x-2 px-5 py-2 bg-white text-black rounded-2xl font-medium text-sm active:scale-[0.985]">
-                <i class="fa-solid fa-wallet mr-2"></i>
-                <span id="wallet-text">Connect Wallet</span>
-            </button>
+        <!-- Tips -->
+        <div class="mt-6 terminal rounded-3xl p-6">
+            <div class="font-semibold mb-4">Share Alpha • Tip Builders</div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-black rounded-2xl p-4">
+                    <div class="font-medium">0xAlphaChad</div>
+                    <button onclick="sendTip('0xAlphaChad')" class="mt-3 w-full py-2 bg-white text-black rounded-2xl text-sm">Tip 0.01 ETH</button>
+                </div>
+                <div class="bg-black rounded-2xl p-4">
+                    <div class="font-medium">BaseBuilder.eth</div>
+                    <button onclick="sendTip('BaseBuilder.eth')" class="mt-3 w-full py-2 bg-white text-black rounded-2xl text-sm">Tip 0.005 ETH</button>
+                </div>
+                <div class="bg-black rounded-2xl p-4">
+                    <div class="font-medium">Your Alpha Score: <span class="text-3xl font-semibold">87</span></div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="max-w-6xl mx-auto px-4 pt-8 pb-12">
-        
-        <!-- Hero -->
-        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-y-4 mb-8">
-            <div>
-                <div class="inline-flex items-center px-3 py-1 text-xs font-medium bg-zinc-900 rounded-2xl mb-3">IPOH DAD MODE</div>
-                <h1 class="font-display text-6xl font-semibold tracking-tighter">TradeTalk</h1>
-                <p class="text-xl text-zinc-400">Social trading powered by AI agents • Built for the family</p>
-            </div>
-            <div class="text-right">
-                <div class="text-emerald-400">Danish • Darissa • Damia</div>
-                <div class="text-sm text-zinc-500">Family First 💰</div>
-            </div>
-        </div>
+    <script>
+        async function fetchPrices() {
+            const el = document.getElementById('prices');
+            el.innerHTML = 'Loading...';
+            try {
+                const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,base,arbitrum&vs_currencies=usd&include_24hr_change=true');
+                const data = await res.json();
+                el.innerHTML = '';
+                const list = [
+                    {id:'bitcoin', sym:'BTC'}, {id:'ethereum', sym:'ETH'},
+                    {id:'base', sym:'BASE'}, {id:'arbitrum', sym:'ARB'}
+                ];
+                list.forEach(t => {
+                    if (!data[t.id]) return;
+                    const p = data[t.id].usd;
+                    const ch = data[t.id].usd_24h_change || 0;
+                    const cls = ch >= 0 ? 'price-up' : 'price-down';
+                    el.innerHTML += `<div class="flex justify-between py-1.5 border-b border-zinc-800 last:border-none"><span>${t.sym}</span><span class="font-mono">$${p} <span class="\( {cls} text-xs">( \){ch.toFixed(1)}%)</span></span></div>`;
+                });
+            } catch(e) { el.innerHTML = 'Failed to load prices'; }
+        }
 
-        <!-- Stats -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div class="terminal rounded-3xl p-5">
-                <div class="text-xs text-zinc-500">TOTAL VOLUME</div>
-                <div class="text-4xl font-semibold mt-1">$124.8K</div>
-            </div>
-            <div class="terminal rounded-3xl p-5">
-                <div class="text-xs text-zinc-500">ACTIVE AGENTS</div>
-                <div class="text-4xl font-semibold mt-1">7</div>
-            </div>
-            <div class="terminal rounded-3xl p-5">
-                <div class="text-xs text-zinc-500">TIPS SENT TODAY</div>
-                <div class="text-4xl font-semibold mt-1 text-emerald-400">42</div>
-            </div>
-            <div class="terminal rounded-3xl p-5">
-                <div class="text-xs text-zinc-500">YOUR ALPHA SCORE</div>
-                <div class="text-4xl font-semibold mt-1">87</div>
-            </div>
-        </div>
+        function connectWallet() {
+            if (typeof window.ethereum === 'undefined') {
+                alert("On mobile: Open this site inside MetaMask or Rabby app.\nOn desktop: Use MetaMask extension.");
+                return;
+            }
+            window.ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
+                document.getElementById('wallet-text').innerHTML = accounts[0].slice(0,6) + '...' + accounts[0].slice(-4);
+            });
+        }
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            
-            <!-- Live Prices -->
-            <div class="terminal rounded-3xl p-6">
+        const chat = [];
+        function sendToAgent() {
+            const input = document.getElementById('agent-input');
+            const chatBox = document.getElementById('agent-chat');
+            if (!input.value.trim()) return;
+            chatBox.innerHTML += `<div class="text-right"><span class="bg-blue-600 px-3 py-1 rounded-2xl text-sm">${input.value}</span></div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+            setTimeout(() => {
+                const replies = ["Solid take.", "Keep shipping on Base.", "Family first is real alpha.", "MCP agents are getting strong."];
+                chatBox.innerHTML += `<div class="agent-bubble p-2 rounded-2xl text-sm">${replies[Math.floor(Math.random()*replies.length)]}</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 600);
+            input.value = '';
+        }
+
+        function sendTip(name) {
+            alert(`Tip sent to ${name} (Demo). Real version coming soon.`);
+        }
+
+        function init() {
+            fetchPrices();
+            const chatBox = document.getElementById('agent-chat');
+            chatBox.innerHTML = `<div class="agent-bubble p-2 rounded-2xl text-sm">Yo. I'm your MCP agent. What's on your mind?</div>`;
+        }
+        window.onload = init;
+    </script>
+</body>
+</html>
