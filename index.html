@@ -26,10 +26,13 @@
                     <span class="ml-2 text-xs px-2 py-0.5 bg-blue-600/20 text-blue-400 rounded-full">BASE</span>
                 </div>
             </div>
-            <button onclick="connectWallet()" class="px-5 py-2 bg-white text-black rounded-2xl font-medium text-sm flex items-center gap-x-2">
-                <i class="fa-solid fa-wallet"></i>
-                <span id="wallet-text">Connect Wallet</span>
-            </button>
+            <div class="flex items-center gap-x-3">
+                <div id="balance-display" class="hidden px-3 py-1 bg-zinc-900 rounded-2xl text-sm font-mono items-center"></div>
+                <button onclick="connectWallet()" class="px-5 py-2 bg-white text-black rounded-2xl font-medium text-sm flex items-center gap-x-2">
+                    <i class="fa-solid fa-wallet"></i>
+                    <span id="wallet-text">Connect Wallet</span>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -71,6 +74,12 @@
             </div>
         </div>
 
+        <!-- Token Balances -->
+        <div id="token-balances-section" class="hidden mt-6 terminal rounded-3xl p-6">
+            <div class="font-semibold mb-4">Token Balances</div>
+            <div id="token-balances" class="space-y-3 text-sm"></div>
+        </div>
+
         <!-- Tips -->
         <div class="mt-6 terminal rounded-3xl p-6">
             <div class="font-semibold mb-4">Share Alpha • Tip Builders</div>
@@ -91,6 +100,67 @@
     </div>
 
     <script>
+        let connectedAddress = null;
+
+        // ERC20 Token list on Base
+        const tokens = [
+            { symbol: "USDC", address: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", decimals: 6 },
+            { symbol: "USDT", address: "0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2", decimals: 6 }
+        ];
+
+        async function connectWallet() {
+            if (typeof window.ethereum === 'undefined') {
+                alert("On mobile: Open this site inside MetaMask or Rabby app browser.");
+                return;
+            }
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                connectedAddress = accounts[0];
+                document.getElementById('wallet-text').innerHTML = connectedAddress.slice(0,6) + '...' + connectedAddress.slice(-4);
+
+                await showBalances(connectedAddress);
+            } catch(e) {
+                alert("Connection failed.");
+            }
+        }
+
+        // Show ETH + ERC20 balances
+        async function showBalances(address) {
+            // ETH Balance
+            const ethBalanceHex = await window.ethereum.request({
+                method: 'eth_getBalance',
+                params: [address, 'latest']
+            });
+            const ethBalance = (parseInt(ethBalanceHex, 16) / 1e18).toFixed(4);
+            document.getElementById('balance-display').innerHTML = `${ethBalance} ETH`;
+            document.getElementById('balance-display').classList.remove('hidden');
+            document.getElementById('balance-display').classList.add('flex');
+
+            // ERC20 Balances
+            const tokenContainer = document.getElementById('token-balances');
+            tokenContainer.innerHTML = '';
+            document.getElementById('token-balances-section').classList.remove('hidden');
+
+            for (let token of tokens) {
+                try {
+                    const data = "0x70a08231000000000000000000000000" + address.slice(2);
+                    const balanceHex = await window.ethereum.request({
+                        method: 'eth_call',
+                        params: [{ to: token.address, data: data }, 'latest']
+                    });
+                    const balance = (parseInt(balanceHex, 16) / Math.pow(10, token.decimals)).toFixed(2);
+                    tokenContainer.innerHTML += `
+                        <div class="flex justify-between items-center py-1">
+                            <span>${token.symbol}</span>
+                            <span class="font-mono">${balance}</span>
+                        </div>
+                    `;
+                } catch(e) {
+                    console.log("Failed to fetch", token.symbol);
+                }
+            }
+        }
+
         async function fetchPrices() {
             const el = document.getElementById('prices');
             el.innerHTML = 'Loading...';
@@ -112,25 +182,14 @@
             } catch(e) { el.innerHTML = 'Failed to load prices'; }
         }
 
-        function connectWallet() {
-            if (typeof window.ethereum === 'undefined') {
-                alert("On mobile: Open this site inside MetaMask or Rabby app.\nOn desktop: Use MetaMask extension.");
-                return;
-            }
-            window.ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
-                document.getElementById('wallet-text').innerHTML = accounts[0].slice(0,6) + '...' + accounts[0].slice(-4);
-            });
-        }
-
-        const chat = [];
         function sendToAgent() {
             const input = document.getElementById('agent-input');
             const chatBox = document.getElementById('agent-chat');
             if (!input.value.trim()) return;
-            chatBox.innerHTML += `<div class="text-right"><span class="bg-blue-600 px-3 py-1 rounded-2xl text-sm">${input.value}</span></div>`;
+            chatBox.innerHTML += `<div class="text-right mb-2"><span class="bg-blue-600 px-3 py-1 rounded-2xl text-sm">${input.value}</span></div>`;
             chatBox.scrollTop = chatBox.scrollHeight;
             setTimeout(() => {
-                const replies = ["Solid take.", "Keep shipping on Base.", "Family first is real alpha.", "MCP agents are getting strong."];
+                const replies = ["Solid.", "Keep shipping on Base.", "Family first is real alpha.", "MCP agents are getting strong."];
                 chatBox.innerHTML += `<div class="agent-bubble p-2 rounded-2xl text-sm">${replies[Math.floor(Math.random()*replies.length)]}</div>`;
                 chatBox.scrollTop = chatBox.scrollHeight;
             }, 600);
@@ -138,7 +197,11 @@
         }
 
         function sendTip(name) {
-            alert(`Tip sent to ${name} (Demo). Real version coming soon.`);
+            if (!connectedAddress) {
+                alert("Connect wallet first.");
+                return;
+            }
+            alert(`Tip sent to ${name} (Demo).`);
         }
 
         function init() {
