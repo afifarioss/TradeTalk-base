@@ -76,3 +76,72 @@
             
             <!-- Live Prices -->
             <div class="terminal rounded-3xl p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="font-semibold">Live Prices</div>
+                    <button onclick="fetchPrices()" class="text-xs px-3 py-1 bg-black rounded-2xl">Refresh</button>
+                </div>
+                <div id="prices" class="space-y-3 text-sm"></div>
+            </div>
+
+            <!-- MCP Agent -->
+            <div class="terminal rounded-3xl p-6 flex flex-col">
+                <div class="font-semibold mb-3 flex items-center gap-x-2">
+                    <i class="fa-solid fa-robot text-blue-400"></i>
+                    <span>MCP Agent • Alpha Yap</span>
+                </div>
+                
+                <div id="agent-chat" class="flex-1 overflow-y-auto space-y-3 mb-4 pr-1 text-sm" style="max-height: 240px;"></div>
+                
+                <div class="flex gap-x-2">
+                    <input id="agent-input" type=" text-2xl font-semibold tracking-tighter">TradeTalk</span>
+                    <span class="ml-2 text-xs px-2 py-0.5 bg-blue-600/20 text-blue-400 rounded-full">BASE</span>
+                </div>
+            </div>
+
+            <button onclick="connectWallet()" 
+                    class="flex items-center gap-x-2 px-5 py-2 bg-white text-black rounded-2xl font-medium text-sm active:scale-[0.985]">
+                <i class="fa-solid fa-wallet mr-2"></i>
+                <span id="wallet-text">Connect Wallet</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 pt-8 pb-12">
+        
+        <!-- Hero -->
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-y-4 mb-8">
+            <div>
+                <div class="inline-flex items-center px-3 py-1 text-xs font-medium bg-zinc-900 rounded-2xl mb-3">IPOH DAD MODE</div>
+                <h1 class="font-display text-6xl font-semibold tracking-tighter">TradeTalk</h1>
+                <p class="text-xl text-zinc-400">Social trading powered by AI agents • Built for the family</p>
+            </div>
+            <div class="text-right">
+                <div class="text-emerald-400">Danish • Darissa • Damia</div>
+                <div class="text-sm text-zinc-500">Family First 💰</div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="terminal rounded-3xl p-5">
+                <div class="text-xs text-zinc-500">TOTAL VOLUME</div>
+                <div class="text-4xl font-semibold mt-1">$124.8K</div>
+            </div>
+            <div class="terminal rounded-3xl p-5">
+                <div class="text-xs text-zinc-500">ACTIVE AGENTS</div>
+                <div class="text-4xl font-semibold mt-1">7</div>
+            </div>
+            <div class="terminal rounded-3xl p-5">
+                <div class="text-xs text-zinc-500">TIPS SENT TODAY</div>
+                <div class="text-4xl font-semibold mt-1 text-emerald-400">42</div>
+            </div>
+            <div class="terminal rounded-3xl p-5">
+                <div class="text-xs text-zinc-500">YOUR ALPHA SCORE</div>
+                <div class="text-4xl font-semibold mt-1">87</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            <!-- Live Prices -->
+            <div class="terminal rounded-3xl p-6">
