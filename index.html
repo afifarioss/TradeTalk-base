@@ -7,429 +7,72 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
-        
-        :root {
-            --bg: #0a0a0a;
-        }
-        
-        body {
-            font-family: 'Inter', system_ui, sans-serif;
-        }
-        
-        .font-display {
-            font-family: 'Space Grotesk', 'Inter', sans-serif;
-            font-weight: 600;
-        }
-
-        .bloomberg {
-            background: #0a0a0a;
-            color: #e5e5e5;
-        }
-
-        .terminal {
-            background: #111;
-            border: 1px solid #333;
-        }
-
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .font-display { font-family: 'Space Grotesk', 'Inter', sans-serif; }
+        .terminal { background: #111; border: 1px solid #333; }
         .price-up { color: #22c55e; }
         .price-down { color: #ef4444; }
-
-        .nav-active {
-            border-bottom: 2px solid #3b82f6;
-            color: white;
-        }
-
-        .agent-message {
-            background: #1f2937;
-            border-left: 3px solid #3b82f6;
-        }
-
-        .metric {
-            transition: all 0.2s ease;
-        }
+        .agent-bubble { background: #1f2937; border-left: 3px solid #3b82f6; }
     </style>
 </head>
-<body class="bloomberg min-h-screen">
+<body class="bg-[#0a0a0a] text-white">
     <!-- Header -->
-    <div class="border-b border-gray-800 bg-black sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex items-center justify-between h-16">
-                <!-- Logo + Brand -->
-                <div class="flex items-center gap-x-3">
-                    <div class="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center">
-                        <i class="fa-solid fa-chart-line text-white text-2xl"></i>
-                    </div>
-                    <div>
-                        <span class="font-display text-2xl font-semibold tracking-tighter">TradeTalk</span>
-                        <span class="text-xs px-2 py-0.5 bg-blue-600/20 text-blue-400 rounded-full ml-1">BASE</span>
-                    </div>
+    <div class="border-b border-zinc-800 bg-black sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
+            <div class="flex items-center gap-x-3">
+                <div class="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center">
+                    <i class="fa-solid fa-chart-line text-xl"></i>
                 </div>
-
-                <div class="flex items-center gap-x-4">
-                    <!-- Wallet Connect -->
-                    <button onclick="connectWallet()" 
-                            class="flex items-center gap-x-2 px-4 py-2 bg-white text-black rounded-2xl font-medium text-sm hover:bg-gray-200 transition-all active:scale-[0.985]">
-                        <i class="fa-solid fa-wallet"></i>
-                        <span id="wallet-text">Connect Wallet</span>
-                    </button>
-
-                    <div class="flex items-center gap-x-2 text-sm">
-                        <div class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse"></div>
-                        <span class="text-emerald-400 text-xs font-medium">LIVE ON BASE</span>
-                    </div>
+                <div>
+                    <span class="font-display text-2xl font-semibold tracking-tighter">TradeTalk</span>
+                    <span class="ml-2 text-xs px-2 py-0.5 bg-blue-600/20 text-blue-400 rounded-full">BASE</span>
                 </div>
             </div>
+
+            <button onclick="connectWallet()" 
+                    class="flex items-center gap-x-2 px-5 py-2 bg-white text-black rounded-2xl font-medium text-sm active:scale-[0.985]">
+                <i class="fa-solid fa-wallet mr-2"></i>
+                <span id="wallet-text">Connect Wallet</span>
+            </button>
         </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 pt-6 pb-12">
+    <div class="max-w-6xl mx-auto px-4 pt-8 pb-12">
         
-        <!-- Hero / Family Branding -->
+        <!-- Hero -->
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-y-4 mb-8">
             <div>
-                <div class="flex items-center gap-x-2 mb-1">
-                    <span class="px-3 py-1 text-xs font-medium bg-zinc-900 text-zinc-400 rounded-2xl">IPOH DAD MODE</span>
-                </div>
-                <h1 class="font-display text-5xl tracking-tighter font-semibold">TradeTalk</h1>
+                <div class="inline-flex items-center px-3 py-1 text-xs font-medium bg-zinc-900 rounded-2xl mb-3">IPOH DAD MODE</div>
+                <h1 class="font-display text-6xl font-semibold tracking-tighter">TradeTalk</h1>
                 <p class="text-xl text-zinc-400">Social trading powered by AI agents • Built for the family</p>
             </div>
-            
             <div class="text-right">
-                <div class="text-emerald-400 text-sm font-medium">Danish • Darissa • Damia</div>
-                <div class="text-xs text-zinc-500">Family First 💰</div>
+                <div class="text-emerald-400">Danish • Darissa • Damia</div>
+                <div class="text-sm text-zinc-500">Family First 💰</div>
             </div>
         </div>
 
-        <!-- Stats Bar -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-            <div class="terminal rounded-3xl p-4">
+        <!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="terminal rounded-3xl p-5">
                 <div class="text-xs text-zinc-500">TOTAL VOLUME</div>
-                <div class="text-3xl font-semibold tabular-nums" id="total-volume">$124.8K</div>
+                <div class="text-4xl font-semibold mt-1">$124.8K</div>
             </div>
-            <div class="terminal rounded-3xl p-4">
+            <div class="terminal rounded-3xl p-5">
                 <div class="text-xs text-zinc-500">ACTIVE AGENTS</div>
-                <div class="text-3xl font-semibold tabular-nums">7</div>
+                <div class="text-4xl font-semibold mt-1">7</div>
             </div>
-            <div class="terminal rounded-3xl p-4">
+            <div class="terminal rounded-3xl p-5">
                 <div class="text-xs text-zinc-500">TIPS SENT TODAY</div>
-                <div class="text-3xl font-semibold tabular-nums text-emerald-400">42</div>
+                <div class="text-4xl font-semibold mt-1 text-emerald-400">42</div>
             </div>
-            <div class="terminal rounded-3xl p-4">
+            <div class="terminal rounded-3xl p-5">
                 <div class="text-xs text-zinc-500">YOUR ALPHA SCORE</div>
-                <div class="text-3xl font-semibold tabular-nums">87</div>
+                <div class="text-4xl font-semibold mt-1">87</div>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             
             <!-- Live Prices -->
-            <div class="lg:col-span-5 terminal rounded-3xl p-5">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="font-semibold flex items-center gap-x-2">
-                        <i class="fa-solid fa-chart-line"></i>
-                        <span>Live Prices</span>
-                    </div>
-                    <button onclick="refreshPrices()" 
-                            class="text-xs px-3 py-1 bg-zinc-900 hover:bg-zinc-800 rounded-2xl flex items-center gap-x-1.5 text-zinc-400">
-                        <i class="fa-solid fa-sync fa-sm"></i>
-                        <span>Refresh</span>
-                    </button>
-                </div>
-                
-                <div id="prices-list" class="space-y-1 text-sm">
-                    <!-- Populated by JS -->
-                </div>
-            </div>
-
-            <!-- AI Agent Yap -->
-            <div class="lg:col-span-7 terminal rounded-3xl p-5 flex flex-col">
-                <div class="flex items-center justify-between mb-4">
-                    <div>
-                        <div class="font-semibold flex items-center gap-x-2">
-                            <i class="fa-solid fa-robot text-blue-400"></i>
-                            <span>MCP Agent • Alpha Yap</span>
-                        </div>
-                        <div class="text-xs text-zinc-500">Ask anything about trading, Base, or agents</div>
-                    </div>
-                    <div class="text-[10px] px-2 py-0.5 bg-blue-600/20 text-blue-400 rounded">ONCHAIN AGENT</div>
-                </div>
-
-                <!-- Chat -->
-                <div id="agent-chat" class="flex-1 overflow-y-auto space-y-3 text-sm mb-3 pr-1 custom-scroll" style="max-height: 220px;">
-                    <div class="agent-message p-3 rounded-2xl text-sm">
-                        Yo. I'm your MCP trading agent. What's on your mind today? Market, alpha, or just venting about gas fees?
-                    </div>
-                </div>
-
-                <div class="flex gap-x-2">
-                    <input id="agent-input" type="text" placeholder="Ask the agent..." 
-                           class="flex-1 bg-zinc-900 border border-zinc-800 focus:border-blue-600 rounded-2xl px-4 py-3 text-sm outline-none"
-                           onkeypress="if (event.key === 'Enter') sendToAgent()">
-                    <button onclick="sendToAgent()" 
-                            class="px-5 bg-blue-600 hover:bg-blue-700 transition-colors rounded-2xl font-medium text-sm">
-                        Send
-                    </button>
-                </div>
-            </div>
-
-            <!-- Quick Trade / Tips -->
-            <div class="lg:col-span-12 terminal rounded-3xl p-5">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="font-semibold">Share Alpha • Tip Builders</div>
-                    <div class="text-xs px-3 py-1 bg-emerald-600/20 text-emerald-400 rounded-2xl">ONCHAIN TIPS LIVE</div>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <!-- Tip Card 1 -->
-                    <div class="bg-zinc-900 rounded-2xl p-4">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="font-medium">0xAlphaChad</div>
-                                <div class="text-xs text-zinc-500">Just called $BRETT perfectly</div>
-                            </div>
-                            <div class="text-right">
-                                <div class="text-emerald-400 text-sm font-medium">+47%</div>
-                            </div>
-                        </div>
-                        <button onclick="sendTip('0xAlphaChad')" 
-                                class="mt-3 w-full py-2 text-sm bg-white text-black rounded-2xl font-medium active:scale-[0.985] transition-transform">
-                            Tip 0.01 ETH
-                        </button>
-                    </div>
-
-                    <div class="bg-zinc-900 rounded-2xl p-4">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="font-medium">BaseBuilder.eth</div>
-                                <div class="text-xs text-zinc-500">Shipped new agent tool</div>
-                            </div>
-                            <div class="text-right">
-                                <div class="text-emerald-400 text-sm font-medium">Solid</div>
-                            </div>
-                        </div>
-                        <button onclick="sendTip('BaseBuilder.eth')" 
-                                class="mt-3 w-full py-2 text-sm bg-white text-black rounded-2xl font-medium active:scale-[0.985] transition-transform">
-                            Tip 0.005 ETH
-                        </button>
-                    </div>
-
-                    <div class="bg-zinc-900 rounded-2xl p-4 flex flex-col justify-between">
-                        <div>
-                            <div class="font-medium mb-1">Your Alpha Score</div>
-                            <div class="text-4xl font-semibold tabular-nums">87</div>
-                        </div>
-                        <div class="text-xs text-zinc-500 mt-auto">+12 this week • Keep shipping</div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="mt-8 text-center text-xs text-zinc-500">
-            Built with ❤️ by an Ipoh Dad • TradeTalk v0.8 • Family First 💰
-        </div>
-    </div>
-
-    <script>
-        // Tailwind script
-        function initializeTailwind() {
-            document.documentElement.style.setProperty('--accent', '#3b82f6');
-        }
-
-        // Wallet Connect
-        let connectedAddress = null;
-
-        async function connectWallet() {
-            if (typeof window.ethereum === 'undefined') {
-                alert("Please install MetaMask or Rabby wallet to connect.");
-                return;
-            }
-
-            try {
-                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                connectedAddress = accounts[0];
-                
-                const shortAddr = connectedAddress.slice(0, 6) + '...' + connectedAddress.slice(-4);
-                document.getElementById('wallet-text').innerHTML = shortAddr;
-                
-                // Show success toast
-                showToast(`Wallet connected: ${shortAddr}`);
-            } catch (error) {
-                console.error(error);
-                alert("Connection failed. Please try again.");
-            }
-        }
-
-        // Live Prices from CoinGecko
-        async function fetchPrices() {
-            const container = document.getElementById('prices-list');
-            container.innerHTML = `<div class="text-center py-4 text-zinc-500 text-sm">Loading live prices...</div>`;
-
-            try {
-                const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,base,arbitrum,optimism&vs_currencies=usd&include_24hr_change=true');
-                const data = await res.json();
-
-                container.innerHTML = '';
-
-                const tokens = [
-                    { id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin' },
-                    { id: 'ethereum', symbol: 'ETH', name: 'Ethereum' },
-                    { id: 'base', symbol: 'BASE', name: 'Base' },
-                    { id: 'arbitrum', symbol: 'ARB', name: 'Arbitrum' },
-                ];
-
-                tokens.forEach(token => {
-                    if (!data[token.id]) return;
-
-                    const price = data[token.id].usd;
-                    const change = data[token.id].usd_24h_change || 0;
-                    const changeClass = change >= 0 ? 'price-up' : 'price-down';
-                    const changeIcon = change >= 0 ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down';
-
-                    const div = document.createElement('div');
-                    div.className = `flex items-center justify-between py-2.5 px-1 border-b border-zinc-800 last:border-none`;
-                    div.innerHTML = `
-                        <div class="flex items-center gap-x-3">
-                            <div class="w-8 h-8 bg-zinc-800 rounded-2xl flex items-center justify-center text-xs font-mono">${token.symbol}</div>
-                            <div>
-                                <div class="font-medium">${token.name}</div>
-                                <div class="text-xs text-zinc-500">${token.symbol}</div>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <div class="font-mono font-medium">$${price.toLocaleString()}</div>
-                            <div class="text-xs ${changeClass} flex items-center justify-end gap-x-1">
-                                <i class="fa-solid ${changeIcon} fa-xs"></i>
-                                <span>${change.toFixed(1)}%</span>
-                            </div>
-                        </div>
-                    `;
-                    container.appendChild(div);
-                });
-            } catch (e) {
-                container.innerHTML = `<div class="text-red-400 text-sm p-4">Failed to load prices. Check internet.</div>`;
-            }
-        }
-
-        function refreshPrices() {
-            fetchPrices();
-        }
-
-        // AI Agent Yap
-        const agentResponses = [
-            "Solid take. The real alpha is in consistent shipping, not just one good call.",
-            "On Base right now, agent-powered tools are printing. Keep building.",
-            "Gas is cheap here. Perfect for high-frequency alpha sharing.",
-            "Family first is actually the best long-term strategy in crypto. Most people don't get it.",
-            "MCP agents are getting smarter every week. Yours is already ahead of most.",
-            "If you're not onchain with your tips, you're leaving money on the table.",
-            "The best traders I see are the ones who ship in public like you.",
-            "Base is winning because builders like you actually ship instead of just talk.",
-        ];
-
-        function sendToAgent() {
-            const input = document.getElementById('agent-input');
-            const chat = document.getElementById('agent-chat');
-            const message = input.value.trim();
-
-            if (!message) return;
-
-            // User message
-            const userDiv = document.createElement('div');
-            userDiv.className = `text-right`;
-            userDiv.innerHTML = `
-                <div class="inline-block bg-blue-600 text-white px-4 py-2 rounded-2xl text-sm max-w-[80%]">
-                    ${message}
-                </div>
-            `;
-            chat.appendChild(userDiv);
-            chat.scrollTop = chat.scrollHeight;
-
-            input.value = '';
-
-            // Agent response (with slight delay for realism)
-            setTimeout(() => {
-                let response = agentResponses[Math.floor(Math.random() * agentResponses.length)];
-                
-                // Smart context matching
-                if (message.toLowerCase().includes('family') || message.toLowerCase().includes('dad')) {
-                    response = "Respect. Building for your kids is the real alpha play. Keep going.";
-                } else if (message.toLowerCase().includes('agent')) {
-                    response = "MCP agents on Base are still early. The ones who ship first win big.";
-                } else if (message.toLowerCase().includes('tip') || message.toLowerCase().includes('alpha')) {
-                    response = "Tipping good alpha onchain builds reputation fast. You're doing it right.";
-                }
-
-                const agentDiv = document.createElement('div');
-                agentDiv.className = `agent-message p-3 rounded-2xl text-sm max-w-[85%]`;
-                agentDiv.innerHTML = response;
-                chat.appendChild(agentDiv);
-                chat.scrollTop = chat.scrollHeight;
-            }, 650);
-        }
-
-        // Tip function
-        function sendTip(builder) {
-            if (!connectedAddress) {
-                alert("Connect your wallet first to send tips onchain.");
-                return;
-            }
-            
-            const amount = prompt(`Send tip to ${builder} (ETH):`, "0.01");
-            if (!amount) return;
-
-            // In real version this would call a smart contract or Farcaster tip
-            showToast(`Tip of ${amount} ETH sent to ${builder}! (Demo mode — real contract coming soon)`);
-            
-            // Fake onchain feel
-            setTimeout(() => {
-                showToast("Transaction confirmed on Base ✅");
-            }, 1800);
-        }
-
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.className = `fixed bottom-6 left-1/2 -translate-x-1/2 bg-zinc-900 border border-zinc-700 text-sm px-5 py-3 rounded-2xl shadow-xl z-[100]`;
-            toast.innerHTML = message;
-            document.body.appendChild(toast);
-
-            setTimeout(() => {
-                toast.style.transition = 'all 0.3s ease';
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 300);
-            }, 2800);
-        }
-
-        // Initialize everything
-        function init() {
-            initializeTailwind();
-            fetchPrices();
-            
-            // Auto refresh prices every 60s
-            setInterval(fetchPrices, 60000);
-            
-            // Welcome message in agent chat after 3 seconds
-            setTimeout(() => {
-                const chat = document.getElementById('agent-chat');
-                if (chat.children.length === 1) {
-                    // already has initial message
-                }
-            }, 3000);
-
-            // Keyboard shortcut hint
-            console.log('%c[TradeTalk] Press / to focus agent input', 'color:#666');
-        }
-
-        // Keyboard shortcut
-        document.addEventListener('keydown', function(e) {
-            if (e.key === '/' && document.activeElement.tagName === 'BODY') {
-                e.preventDefault();
-                document.getElementById('agent-input').focus();
-            }
-        });
-
-        window.onload = init;
-    </script>
-</body>
-</html>
+            <div class="terminal rounded-3xl p-6">
