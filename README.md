@@ -1,6 +1,6 @@
 # TradeTalk — Social Trading Mini-App on Base
 
-**Live:** [tradetalk-base.vercel.app](https://tradetalk-base.vercel.app)  
+**Live:** https://trade-talk-base.vercel.app/
 **Wallet:** afifarioss.base.eth  
 **Built by:** @afifarioss (Ipoh Dad building on Base)
 
