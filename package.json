@@ -11,7 +11,6 @@
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
-<meta name="virtual-protocol-site-verification" content="a2f9b7ef15b6acbabc9e1324743aa500" /> 
  },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",
