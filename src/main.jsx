@@ -1,3 +1,4 @@
+<meta name="virtual-protocol-site-verification" content="a2f9b7ef15b6acbabc9e1324743aa500" />
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import TradeTalk from './TradeTalk.jsx'
